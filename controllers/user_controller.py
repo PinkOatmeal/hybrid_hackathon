@@ -90,4 +90,4 @@ class UserController:
 
         rating_str = "⭐" * int(rating)
 
-        return f"Имя: {user.name}\n\nО себе: {user.bio}\n\nРейтинг: {rating_str if rating_str != '' else 'нет рейтинга'}"
+        return f"Имя: \n{user.name}\n\nО себе: \n{user.bio}\n\nРейтинг: \n{rating_str if rating_str != '' else 'нет рейтинга'}"
