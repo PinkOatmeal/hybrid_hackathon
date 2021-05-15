@@ -5,4 +5,4 @@ from utils.enums import UserStateMachine
 
 
 def filter_by_state(message: Message):
-    return UserController.check_state(message.chat.id, [UserStateMachine.enter_bio])
+    return UserController.check_state(message.chat.id, [UserStateMachine.start])
