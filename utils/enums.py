@@ -10,7 +10,7 @@ class UserState(Enum):
     busy = auto()
 
 
-class MeetingState(Enum):
+class MeetingStatus(Enum):
     planned = auto()
     in_progress = auto()
     ended = auto()
