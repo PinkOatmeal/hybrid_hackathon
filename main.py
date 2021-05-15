@@ -3,8 +3,8 @@ from telebot.types import Message
 
 from keyboards.start import StartKeyboard
 from keyboards.viewing import ViewingKeyboard
-from settings import TOKEN
 from filters import join_name, join_about, viewing_next, viewing_good, join_successful, main_menu
+from config import TOKEN
 
 bot = telebot.TeleBot(TOKEN)
 
