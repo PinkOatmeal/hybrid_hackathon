@@ -1,6 +1,7 @@
 import telebot
 from telebot.types import Message
 
+from keyboards.main import MainKeyboard
 from keyboards.start import StartKeyboard
 from keyboards.viewing import ViewingKeyboard
 from filters import (join_name,
@@ -8,7 +9,7 @@ from filters import (join_name,
                      viewing_next,
                      viewing_good,
                      join_successful,
-                     main_menu,
+                     find_meeting,
                      main_info,
                      start_registered)
 from config import TOKEN
@@ -16,6 +17,8 @@ from views.InfoView import InfoView
 from views.join_name import JoinNameView
 from views.join_bio import JoinBioView
 from views.end_register import EndRegisterView
+from views.find_meeting import FindMeetingView
+from views.main import MainView
 from views.start import StartView
 
 bot = telebot.TeleBot(TOKEN)
@@ -36,7 +39,20 @@ bot.message_handler(func=join_successful.filter_by_state,
                     )(EndRegisterView.build)
 
 bot.message_handler(func=main_info.filter_by_state,
+                    regexp=MainKeyboard.info,
                     )(InfoView.build)
+
+bot.message_handler(func=find_meeting.filter_by_state,
+                    regexp=MainKeyboard.find,
+                    )(FindMeetingView.build)
+
+bot.message_handler(func=find_meeting.filter_by_state_in_finded,
+                    regexp=ViewingKeyboard.back,
+                    )(MainView.build)
+
+bot.message_handler(func=find_meeting.filter_by_state_in_finded,
+                    regexp=ViewingKeyboard.next,
+                    )(FindMeetingView.build)
 
 
 if __name__ == '__main__':
