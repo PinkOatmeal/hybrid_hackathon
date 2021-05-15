@@ -5,6 +5,6 @@ class IKeyboard(metaclass=ABCMeta):
 
     @classmethod
     @abstractmethod
-    def build(cls):
+    def build(cls, *args, **kwargs):
         pass
 

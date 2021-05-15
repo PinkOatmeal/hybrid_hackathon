@@ -60,6 +60,7 @@ class UserController:
         return None
 
 
+    @staticmethod
     def get_info(_id: int) -> str:
         user = User.get(User.id == _id)
 

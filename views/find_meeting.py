@@ -15,12 +15,14 @@ class FindMeetingView(BaseView):
         user_id = message.chat.id
         UserController.set_state(user_id, UserStateMachine.find_meeting)
         candidate = UserController.find_meeting(user_id)
+        MeetingController.delete_not_is_ready(initiator_id=user_id)
         if candidate is None:
             UserController.set_state(user_id, UserStateMachine.main_menu)
             self.bot.send_message(user_id,
                                   "Кандидатов для встречи нет",
                                   reply_markup=MainKeyboard.build())
         else:
+            MeetingController.create_meeting(initiator_id=user_id, companion_id=candidate.id)
             self.bot.send_message(user_id,
                                   f"{candidate.name}\n\n{candidate.bio}",
                                   reply_markup=ViewingKeyboard.build())

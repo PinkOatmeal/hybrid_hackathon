@@ -10,3 +10,7 @@ def filter_by_state(message: Message):
 
 def filter_by_state_in_finded(message: Message):
     return UserController.check_state(message.chat.id, [UserStateMachine.find_meeting])
+
+
+def filter_by_state_in_date(message: Message):
+    return UserController.check_state(message.chat.id, [UserStateMachine.meeting_date])
