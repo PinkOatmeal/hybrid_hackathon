@@ -1,16 +1,19 @@
-from enum import Enum, auto
+from enum import IntEnum
 
 
-class UserStateMachine(Enum):
-    start = auto()
+class UserStateMachine(IntEnum):
+    start = 0
+    enter_name = 1
+    enter_bio = 2
+    main_menu = 3
 
 
-class UserState(Enum):
-    free = auto()
-    busy = auto()
+class UserStatus(IntEnum):
+    free = 0
+    busy = 1
 
 
-class MeetingStatus(Enum):
-    planned = auto()
-    in_progress = auto()
-    ended = auto()
+class MeetingStatus(IntEnum):
+    planned = 0
+    in_progress = 1
+    ended = 2
