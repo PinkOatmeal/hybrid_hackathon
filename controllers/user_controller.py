@@ -19,8 +19,8 @@ class UserController:
     def fill_bio(_id: int, bio: str) -> User:
         user: User = User.get(User.id == _id)
         user.bio = bio
-        user.save()
         user.is_registered = True
+        user.save()
         return user
 
     @staticmethod
@@ -39,6 +39,6 @@ class UserController:
 
     @staticmethod
     def check_state(_id: int, state_list: list[UserStateMachine]):
-        user: User = User.get(User.id == id)
+        user: User = User.get(User.id == _id)
         current_state = UserStateMachine(user.state)
         return current_state in state_list
