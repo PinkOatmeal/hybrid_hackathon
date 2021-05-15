@@ -1,6 +1,8 @@
 import datetime
 
+from controllers.user_controller import UserController
 from models.meeting import Meeting
+from models.user import User
 from utils.enums import MeetingStatus
 
 
@@ -53,3 +55,17 @@ class MeetingController:
         meeting.meeting_time = time_to_db
         meeting.save()
         return meeting
+
+    @staticmethod
+    def get_active_meeting(_id: int) -> str:
+        query = ((Meeting.initiator_id == _id) | (Meeting.companion_id == _id)) \
+                & ((Meeting.status == MeetingStatus.planned) | (Meeting.status == MeetingStatus.planned))
+        meeting: Meeting = Meeting.get(query)
+        if _id == meeting.initiator_id.id:
+            companion: User = User.get(User.id == meeting.companion_id)
+        else:
+            companion: User = User.get(User.id == meeting.initiator_id)
+
+        meeting_time = meeting.meeting_time.strftime("%H:%M %d.%m.%Y")
+
+        return f"Время:\n{meeting_time}\n\n" + UserController.get_info(companion.id)
