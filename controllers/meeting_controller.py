@@ -1,7 +1,9 @@
 import datetime
 from typing import Optional
 
+from controllers.user_controller import UserController
 from models.meeting import Meeting
+from models.user import User
 from utils.enums import MeetingStatus
 
 
@@ -77,6 +79,20 @@ class MeetingController:
         return meeting
 
     @staticmethod
+    def get_active_meeting(_id: int) -> str:
+        query = ((Meeting.initiator_id == _id) | (Meeting.companion_id == _id)) \
+                & ((Meeting.status == MeetingStatus.planned) | (Meeting.status == MeetingStatus.planned))
+        meeting: Meeting = Meeting.get(query)
+        if _id == meeting.initiator_id.id:
+            companion: User = User.get(User.id == meeting.companion_id)
+        else:
+            companion: User = User.get(User.id == meeting.initiator_id)
+
+        meeting_time = meeting.meeting_time.strftime("%H:%M %d.%m.%Y")
+
+        return f"Время:\n{meeting_time}\n\n" + UserController.get_info(companion.id)
+      
+    @staticmethod
     def get_exist_records(user_id: int) -> list:
         results = set()
         query_set = Meeting.select().where((Meeting.initiator_id == user_id) |
@@ -85,3 +101,20 @@ class MeetingController:
             results.add(i.initiator_id.id)
             results.add(i.companion_id.id)
         return list(results)
+
+    @staticmethod
+    def get_history(_id: int) -> str:
+        query = ((Meeting.initiator_id == _id) | (Meeting.companion_id == _id))
+        meetings = Meeting.select().where(query).order_by(Meeting.id.desc()).limit(5)
+
+        history_entries = []
+        meeting: Meeting
+        for meeting in meetings:
+            if _id == meeting.initiator_id.id:
+                companion = meeting.companion_id
+            else:
+                companion = meeting.initiator_id
+
+            history_entries.append(f"Дата: {meeting.meeting_time.strftime('%H:%M %d.%m.%Y')}\nС кем: {companion.name}")
+
+        return "\n\n".join(history_entries)

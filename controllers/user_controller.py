@@ -59,7 +59,6 @@ class UserController:
             return query_set.get()
         return None
 
-
     @staticmethod
     def get_info(_id: int) -> str:
         user = User.get(User.id == _id)
@@ -76,7 +75,8 @@ class UserController:
         meetings_as_companion = Meeting.select().where(user.id == Meeting.companion_id)
         ratings_as_companion = []
         for meeting in meetings_as_companion:
-            ratings_as_companion.append(meeting.initiator_rate)
+            if meeting.initiator_rate is not None:
+                ratings_as_companion.append(meeting.itiator_rate)
         try:
             rating_as_companion = round(sum(ratings_as_companion) / len(ratings_as_companion), 0)
         except ZeroDivisionError:
