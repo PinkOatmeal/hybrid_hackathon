@@ -1,5 +1,9 @@
+from typing import Optional
+
+from peewee import fn
+
 from models.user import User
-from utils.enums import UserStateMachine
+from utils.enums import UserStateMachine, UserStatus
 
 
 class UserController:
@@ -46,3 +50,11 @@ class UserController:
         user: User = User.get(User.id == _id)
         current_state = UserStateMachine(user.state)
         return current_state in state_list
+
+    @staticmethod
+    def find_meeting(user_id: int) -> Optional[User]:
+        query_set = User.select().where((User.id != user_id) & (User.status == UserStatus.free)).order_by(fn.Random()).limit(1)
+        if query_set.exists():
+            return query_set.get()
+        return None
+
