@@ -3,8 +3,8 @@ from telebot.types import Message
 
 from keyboards.start import StartKeyboard
 from keyboards.viewing import ViewingKeyboard
+from filters import join_name, join_about, viewing_next, viewing_good, join_successful, main_menu
 from config import TOKEN
-from filters import join_name, join_about, viewing_next, viewing_good, join_successful
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -53,6 +53,13 @@ def viewing_next(message: Message):
 def viewing_good(message: Message):
     bot.send_message(message.chat.id,
                      "lorem",
+                     reply_markup=ViewingKeyboard.build())
+
+
+@bot.message_handler(func=main_menu.filter_by_state)
+def main_menu(message: Message):
+    bot.send_message(message.chat.id,
+                     "Главное меню",
                      reply_markup=ViewingKeyboard.build())
 
 
