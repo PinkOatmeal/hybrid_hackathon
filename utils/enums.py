@@ -6,6 +6,7 @@ class UserStateMachine(IntEnum):
     enter_name = 1
     enter_bio = 2
     main_menu = 3
+    find_meeting = 4
 
 
 class UserStatus(IntEnum):

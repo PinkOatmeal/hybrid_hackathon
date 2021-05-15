@@ -3,7 +3,7 @@ from models.meeting import Meeting
 from models.user import User
 from models.companion_history import CompanionHistory
 
-list_model: list = [User, Meeting, CompanionHistory]
+list_model: list = [User, Meeting]
 
 
 def migrate():
