@@ -7,8 +7,8 @@ from models.user import User
 
 
 class Meeting(BaseModel):
-    initiator_id: int = ForeignKeyField(User)
-    companion_id: int = ForeignKeyField(User)
+    initiator_id: User = ForeignKeyField(User)
+    companion_id: User = ForeignKeyField(User)
     initiator_rate: int = IntegerField(null=True)
     companion_rate: int = IntegerField(null=True)
     initiator_feedback: str = TextField(null=True)

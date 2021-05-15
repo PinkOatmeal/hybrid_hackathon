@@ -7,6 +7,7 @@ class UserStateMachine(IntEnum):
     enter_bio = 2
     main_menu = 3
     find_meeting = 4
+    meeting_date = 5
 
 
 class UserStatus(IntEnum):
@@ -15,6 +16,13 @@ class UserStatus(IntEnum):
 
 
 class MeetingStatus(IntEnum):
-    planned = 0
-    in_progress = 1
-    ended = 2
+    not_answer = 0
+    planned = 1
+    in_progress = 2
+    ended = 3
+    refuse = 4
+
+
+class MeetingCallbackQuery(IntEnum):
+    ok = 0
+    cancel = 1
