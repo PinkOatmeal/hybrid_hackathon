@@ -13,7 +13,7 @@ class UserStatus(IntEnum):
     busy = 1
 
 
-class MeetingState(IntEnum):
+class MeetingStatus(IntEnum):
     planned = 0
     in_progress = 1
     ended = 2
