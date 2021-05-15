@@ -6,7 +6,11 @@ class UserController:
 
     @staticmethod
     def create_initial(_id: int) -> User:
-        return User.get_or_create(id=_id)
+        user = User.get_or_none(id=_id)
+        if user is not None:
+            user.delete_instance()
+            return User.create(id=_id)
+        return User.create(id=_id)
 
     @staticmethod
     def fill_name(_id: int, name: str) -> User:
