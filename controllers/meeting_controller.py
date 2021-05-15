@@ -80,3 +80,19 @@ class MeetingController:
             results.add(i.companion_id.id)
         return list(results)
 
+    @staticmethod
+    def get_history(_id: int) -> str:
+        query = ((Meeting.initiator_id == _id) | (Meeting.companion_id == _id))
+        meetings = Meeting.select().where(query).order_by(Meeting.id.desc()).limit(5)
+
+        history_entries = []
+        meeting: Meeting
+        for meeting in meetings:
+            if _id == meeting.initiator_id.id:
+                companion = meeting.companion_id
+            else:
+                companion = meeting.initiator_id
+
+            history_entries.append(f"Дата: {meeting.meeting_time.strftime('%H:%M %d.%m.%Y')}\nС кем: {companion.name}")
+
+        return "\n\n".join(history_entries)
