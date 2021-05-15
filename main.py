@@ -8,11 +8,14 @@ from filters import (join_name,
                      join_about,
                      viewing_next,
                      viewing_good,
+                     main_menu,
                      join_successful,
                      find_meeting,
                      main_info,
                      start_registered)
 from config import TOKEN
+from views.active import ActiveView
+from views.history import HistoryView
 from views.info import InfoView
 from views.join_name import JoinNameView
 from views.join_bio import JoinBioView
@@ -60,6 +63,12 @@ bot.message_handler(func=find_meeting.filter_by_state_in_finded,
 
 bot.message_handler(func=find_meeting.filter_by_state_in_date,
                     )(MeetingCreateView.build)
+
+bot.message_handler(func=main_menu.filter_by_state, regexp=MainKeyboard.history,
+                    )(HistoryView.build)
+
+bot.message_handler(func=main_menu.filter_by_state, regexp=MainKeyboard.active,
+                    )(ActiveView.build)
 
 bot.callback_query_handler(func=lambda call: True
                            )(MeetingInlineView.build)
