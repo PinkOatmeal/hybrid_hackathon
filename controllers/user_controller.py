@@ -24,7 +24,7 @@ class UserController:
         return user
 
     @staticmethod
-    def set_state(_id: int, state: int) -> User:
+    def set_state(_id: int, state: UserStateMachine) -> User:
         user: User = User.get(User.id == _id)
         user.state = state
         user.save()
