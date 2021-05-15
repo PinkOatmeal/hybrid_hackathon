@@ -1,4 +1,5 @@
 from models.user import User
+from utils.enums import UserStateMachine
 
 
 class UserController:
@@ -35,3 +36,9 @@ class UserController:
         user.state = state
         user.save()
         return user
+
+    @staticmethod
+    def check_state(_id: int, state_list: list[UserStateMachine]):
+        user: User = User.get(User.id == id)
+        current_state = UserStateMachine(user.state)
+        return current_state in state_list
